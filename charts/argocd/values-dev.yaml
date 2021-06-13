@@ -13,7 +13,7 @@ argo-cd:
           namespace: default
         source:
           repoURL: https://github.com/svdubovik/argocd.git
-          path: /
+          path: .
           targetRevision: main
           helm:
             valueFiles:
