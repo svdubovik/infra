@@ -1,0 +1,13 @@
+apiVersion: v2
+name: argocd
+version: 1.0.0
+description: Umbrella chart for argocd
+
+dependencies:
+- name: argo-cd
+  version: 3.6.8
+  repository: https://argoproj.github.io/argo-helm
+
+- name: argocd-notifications
+  version: 1.4.0
+  repository: https://argoproj.github.io/argo-helm

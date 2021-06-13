@@ -1,0 +1,42 @@
+argo-cd:
+  dex:
+    enabled: false
+
+  server:
+    ingress:
+      enabled: true
+
+    extraArgs:
+      - --insecure
+
+    config:
+      # https://github.com/argoproj/argo-cd/issues/1704
+      resource.customizations: |
+        extensions/Ingress:
+            health.lua: |
+              hs = {}
+              hs.status = "Healthy"
+              return hs
+
+      repositories: |
+        - type: helm
+          url: https://argoproj.github.io/argo-helm
+          name: argo
+        - type: helm
+          url: https://bitnami-labs.github.io/sealed-secrets
+          name: sealed-secrets
+        - type: helm
+          url: https://charts.bitnami.com/bitnami
+          name: bitnami
+
+    additionalApplications:
+      - name: root
+        namespace: argocd
+        project: default
+        destination:
+          server: https://kubernetes.default.svc
+          namespace: default
+        source:
+          repoURL: https://github.com/svdubovik/infra.git
+          path: apps/
+          targetRevision: main
