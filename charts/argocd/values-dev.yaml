@@ -6,9 +6,20 @@ argo-cd:
 
     additionalApplications:
       - name: root
+        namespace: argocd
+        project: default
+        destination:
+          server: https://kubernetes.default.svc
+          namespace: default
         source:
+          repoURL: https://github.com/svdubovik/argocd.git
+          path: /
+          targetRevision: main
           helm:
-            valueFiles: values-dev.yaml
+            valueFiles:
+              - values-dev.yaml
         syncPolicy:
           automated:
             prune: true # Specifies if resources should be pruned during auto-syncing ( false by default )
+          syncOptions:
+            - CreateNamespace=true

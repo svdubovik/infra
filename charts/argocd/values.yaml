@@ -31,18 +31,3 @@ argo-cd:
         - type: helm
           url: https://kubernetes.github.io/ingress-nginx
           name: ingress-nginx
-
-    additionalApplications:
-      - name: root
-        namespace: argocd
-        project: default
-        destination:
-          server: https://kubernetes.default.svc
-          namespace: default
-        source:
-          repoURL: https://github.com/svdubovik/argocd.git
-          path: /
-          targetRevision: main
-        syncPolicy:
-          syncOptions:
-            - CreateNamespace=true

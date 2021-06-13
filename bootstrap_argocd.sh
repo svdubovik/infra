@@ -48,7 +48,8 @@ helm upgrade $RELEASE_NAME charts/argocd/ \
   --wait \
   --create-namespace \
   --namespace $ARGOCD_NAMESPACE \
-  --values values-$env_name.yaml \
+  --values ./charts/argocd//values-$env_name.yaml \
   --set argo-cd.installCRDs=false
 
-# TODO Add removing helm deployment from k8s. ArgoCD managed by itself
+# Remove helm deployment from k8s. ArgoCD managed by itself
+kubectl delete secrets -l name=argocd,owner=helm
