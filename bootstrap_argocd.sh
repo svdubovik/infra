@@ -42,3 +42,5 @@ helm upgrade $RELEASE_NAME charts/argocd/ \
   --create-namespace \
   --namespace $ARGOCD_NAMESPACE \
   --set argo-cd.installCRDs=false
+
+# TODO Add removing helm deployment from k8s. ArgoCD managed by itself
