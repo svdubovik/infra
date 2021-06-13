@@ -15,7 +15,7 @@ ingress-nginx:
                 - key: node-role.kubernetes.io/master
                   operator: In
                   values:
-                    - true
+                    - "true"
 
     config:
       log-format-escape-json: "true"
