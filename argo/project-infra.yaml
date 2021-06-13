@@ -17,3 +17,8 @@ spec:
   destinations:
   - namespace: '*'
     server: https://kubernetes.default.svc
+
+  # Allow create any resources in cluster
+  clusterResourceWhitelist:
+  - group: '*'
+    kind: '*'
