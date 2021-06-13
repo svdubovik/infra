@@ -10,8 +10,8 @@ ingress-nginx:
     affinity:
       nodeAffinity:
         requiredDuringSchedulingIgnoredDuringExecution:
-          - nodeSelectorTerms:
-              matchExpressions:
+          nodeSelectorTerms:
+            - matchExpressions:
                 - key: node-role.kubernetes.io/master
                   operator: In
                   values:
