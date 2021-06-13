@@ -3,3 +3,12 @@ argo-cd:
     ingress:
       hosts:
         - argocd.dev.com
+
+    additionalApplications:
+      - name: root
+        source:
+          helm:
+            valueFiles: values-dev.yaml
+        syncPolicy:
+          automated:
+            prune: true # Specifies if resources should be pruned during auto-syncing ( false by default )

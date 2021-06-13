@@ -1,0 +1,11 @@
+argo-cd:
+  server:
+    ingress:
+      hosts:
+        - argocd.stage.com
+
+    additionalApplications:
+      - name: root
+        source:
+          helm:
+            valueFiles: values-stage.yaml

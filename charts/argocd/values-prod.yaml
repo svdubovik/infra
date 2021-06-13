@@ -1,0 +1,11 @@
+argo-cd:
+  server:
+    ingress:
+      hosts:
+        - argocd.prod.com
+
+    additionalApplications:
+      - name: root
+        source:
+          helm:
+            valueFiles: values-prod.yaml

@@ -44,7 +44,5 @@ argo-cd:
           path: argo/
           targetRevision: main
         syncPolicy:
-          automated:
-            prune: true # Specifies if resources should be pruned during auto-syncing ( false by default )
           syncOptions:
             - CreateNamespace=true
