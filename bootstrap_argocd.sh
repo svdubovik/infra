@@ -11,12 +11,14 @@ function usage {
     echo "usage: $0 [-h] -c kubecontext"
     echo "  -h      display help"
     echo "  -c      kubecontext   mandatory argument to specify the kubecontext where execute deploy"
+    echo "  -e      environment   mandatory argument to specify the values file for specific environment"
 }
 
 # Parse arguments
-while getopts "c:h" opt; do
+while getopts "c:e:h" opt; do
   case $opt in
     c) kubecontext=$OPTARG;; # set kubecontext
+    e) env_name=$OPTARG;; # set environment name
     h) usage && exit 1
   esac
 done
@@ -25,6 +27,11 @@ done
 if [[ -z $kubecontext ]]
 then
   echo "Use the mandatory argument -c to set kubecontext" && exit 1
+fi
+
+if [[ -z $env_name ]]
+then
+  echo "Use the mandatory argument -e to set environment" && exit 1
 fi
 
 # Set k8s context
@@ -41,6 +48,7 @@ helm upgrade $RELEASE_NAME charts/argocd/ \
   --wait \
   --create-namespace \
   --namespace $ARGOCD_NAMESPACE \
+  --values values-$env_name.yaml \
   --set argo-cd.installCRDs=false
 
 # TODO Add removing helm deployment from k8s. ArgoCD managed by itself

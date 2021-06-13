@@ -40,8 +40,8 @@ argo-cd:
           server: https://kubernetes.default.svc
           namespace: default
         source:
-          repoURL: https://github.com/svdubovik/infra.git
-          path: argo/
+          repoURL: https://github.com/svdubovik/argocd.git
+          path: /
           targetRevision: main
         syncPolicy:
           syncOptions:
