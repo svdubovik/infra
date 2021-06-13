@@ -12,7 +12,7 @@ argo-cd:
     config:
       # https://github.com/argoproj/argo-cd/issues/1704
       resource.customizations: |
-        extensions/Ingress:
+        networking.k8s.io/Ingress:
             health.lua: |
               hs = {}
               hs.status = "Healthy"
