@@ -2,4 +2,4 @@ argo-cd:
   server:
     ingress:
       hosts:
-        - argocd.dev.svyat.com
+        - argocd.dev.com
