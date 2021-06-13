@@ -1,0 +1,10 @@
+apiVersion: v2
+version: 3.33.0-0
+appVersion: 0.47.0
+name: ingress-nginx
+description: Umbrellad chart for ingress-nginx
+
+dependencies:
+- name: ingress-nginx
+  version: "3.33.0"
+  repository: "@ingress-nginx"

@@ -1,0 +1,63 @@
+ingress-nginx:
+  controller:
+    kind: Deployment
+
+    resources:
+      requests:
+        cpu: 50m
+        memory: 50Mi
+
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          - nodeSelectorTerms:
+              matchExpressions:
+                - key: node-role.kubernetes.io/master
+                  operator: In
+                  values:
+                    - true
+
+    config:
+      log-format-escape-json: "true"
+      log-format-upstream: '{
+        "time": "$time_iso8601",
+        "host": "$host",
+        "status": "$status",
+        "server_addr": "$server_addr",
+        "server_port": "$server_port",
+        "server_protocol": "$server_protocol",
+        "upstream_addr": "$upstream_addr",
+        "args": "$args",
+        "uri": "$uri",
+        "request_uri": "$request_uri",
+        "request_id": "$req_id",
+        "request_length": $request_length,
+        "request_method": "$request_method",
+        "request_time": "$request_time",
+        "remote_addr": "$remote_addr",
+        "x-forwarded-for": "$http_x_forwarded_for",
+        "http_referrer": "$http_referer",
+        "http_user_agent": "$http_user_agent",
+        "bytes_sent": "$bytes_sent"
+        }'
+
+    metrics:
+      enabled: false
+
+      serviceMonitor:
+        enabled: true
+        namespace: monitoring
+        scrapeInterval: 30s
+
+      prometheusRule:
+        enabled: true
+        namespace: monitoring
+        rules:
+          - alert: NGINXConfigFailed
+            expr: count(nginx_ingress_controller_config_last_reload_successful == 0) > 0
+            for: 1s
+            labels:
+              severity: warning
+            annotations:
+              description: bad ingress config - nginx config test failed
+              summary: uninstall the latest ingress changes to allow config reloads to resume
